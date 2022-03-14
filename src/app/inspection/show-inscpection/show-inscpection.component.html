@@ -1,0 +1,115 @@
+<!-- Button trigger modal -->
+<button
+  type="button"
+  class="btn btn-primary float-end m-2"
+  data-bs-toggle="modal"
+  data-bs-target="#staticBackdrop"
+  (click)="modalAdd()"
+>
+  Add Inspection
+</button>
+
+<!-- Button trigger modal -->
+<button
+  type="button"
+  class="btn btn-secondary float-end m-2"
+  data-bs-toggle="modal"
+  data-bs-target="#exampleModal"
+>
+  Show Inspection Types
+</button>
+
+<table class="table table-striped">
+  <thead>
+    <th>Id</th>
+    <th>Inspection Type</th>
+    <th>Status</th>
+    <th>Comments</th>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of inspectionList$ | async">
+      <td>{{ item.id }}</td>
+      <td>{{ inspectionTypesMap.get(item.id) }}</td>
+      <!-- <th>{{ item.inspectionId }}</th> -->
+      <td>{{ item.status }}</td>
+      <td>{{ item.commnets }}</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="alert alert-success" role="alert" id="add-succes-alert">
+  Inspection successfully added!
+</div>
+<div class="alert alert-success" role="alert" id="update-succes-alert">
+  Inspection successfully updated!
+</div>
+<div class="alert alert-success" role="alert" id="add-succes-alert">
+  Inspection successfully deleted!
+</div>
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="exampleModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <p *ngFor="let type of inspectionTypesList$ | async">
+          {{ type.id }} - {{ type.myProperty }}
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Add or edit inspection Modal -->
+<div
+  class="modal fade"
+  id="staticBackdrop"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="staticBackdropLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">{{ modalTitle }}</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          (click)="modalClose()"
+          id="add-edit-modal-close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <app-add-edit-inscpection
+          [inspection]="inspection"
+          *ngIf="activateAddEditInspectionComponent"
+        ></app-add-edit-inscpection>
+      </div>
+    </div>
+  </div>
+</div>
